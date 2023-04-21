@@ -1,4 +1,5 @@
 import socket
+from threading import Thread
 
 HOST = "127.0.0.1"
 PORT = 12345
@@ -19,4 +20,5 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.listen()
     while True:
         conn, _ = s.accept()
-        new_client(conn)
+        client_thread = Thread(target=new_client, args=(conn,))
+        client_thread.start()
